@@ -1,0 +1,4 @@
+package PageObjects
+
+class EmptyCartModal {
+}

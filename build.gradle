@@ -1,0 +1,32 @@
+    plugins {
+    id 'groovy'
+}
+
+group = 'com.webstaurantstore'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.groovy:groovy:4.0.20'                // Groovy
+    implementation 'org.gebish:geb-core:7.0'                                   // Geb
+    implementation 'org.gebish:geb-spock:7.0'                                 // Geb integration with Spock test framework
+    implementation("org.spockframework:spock-core:2.3-groovy-3.0") {                      // Spock test framework
+        exclude group: "org.codehaus.groovy" // exclude groovy from the dependencies for spock-core
+    }
+    implementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
+    // https://mvnrepository.com/artifact/io.github.qsy7.java.modules.browser.drivers/chromedriver
+    implementation 'io.github.qsy7.java.modules.browser.drivers:chromedriver:0.3.3'
+
+    testImplementation 'org.spockframework:spock-core'
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+//    testImplementation 'org.slf4j:slf4j-log4j12:2.0.12'
+
+}
+
+test {
+    useJUnitPlatform()
+}
