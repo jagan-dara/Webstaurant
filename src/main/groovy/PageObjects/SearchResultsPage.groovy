@@ -1,25 +1,58 @@
 package PageObjects
 
 import Common.BasePage
-import geb.Page
-import org.openqa.selenium.By
 
-class HomePage extends Page{
+class SearchResultsPage extends BasePage{
     static  at = {
-        getTitle() == "WebstaurantStore: Restaurant Supplies & Foodservice Equipment"
+        getTitle().toString().containsIgnoreCase("- WebstaurantStore")
     }
     static content = {
-//        select by id
-//        searchField                 {$("#searchval")}
-//        select by test-dataid
-        searchField                 {$('[data-testid="searchval"]')}
-//        searchButton                { By.xpath('//*[@id="searchForm"]/div/button')}
-        searchButton                {$("button[type=submit][value=Search]")}
+        searchResults {$('[data-testid="itemDescription"]')}
+        paginationButtons {$('[data-testid=paging] nav ul li')}
+        addToCartButtons {$('[data-testid="itemAddCart"]')}
     }
 
-    void enterSearchTerm(String searchTerm){
-        searchField[0].click()
-        searchField[0] << searchTerm
-        searchButton.first().click()
+    boolean verifySearchResultDescrition(String searchTerm){
+        boolean resultsContainTable = true
+        while (verifyAtNotLastPage() && resultsContainTable){
+            searchResults.every {
+                resultsContainTable && it.text().containsIgnoreCase(searchTerm)
+            }
+            navigateToNextPage()
+        }
+        return resultsContainTable
+    }
+
+    void navigateLastPage(){
+        while(verifyAtNotLastPage()){
+            navigateToNextPage()
+        }
+    }
+    void selectLastSearchResultOnPage(){
+        searchResults.last().click()
+    }
+
+    boolean verifyNotAtFirstPage(){
+        paginationButtons.first().text() == ""
+    }
+
+    boolean verifyAtNotLastPage(){
+        paginationButtons.last().text() == ""
+    }
+
+    void navigateToNextPage(){
+        paginationButtons.last().click()
+    }
+
+    void navigateToPreviousPage(){
+        paginationButtons.first().click()
+    }
+
+    void addLastItemOnPageToCart(){
+        addToCartButtons.last().click()
+    }
+
+    void clickCartButton(){
+        cartButton.click()
     }
 }

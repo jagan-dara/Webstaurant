@@ -1,58 +1,28 @@
 package PageObjects
 
 import Common.BasePage
+import org.openqa.selenium.By
 
-class SearchResultsPage extends BasePage{
+class ShoppingCartPage extends BasePage{
     static  at = {
-        getTitle().toString().containsIgnoreCase("- WebstaurantStore")
+        getTitle().toString().containsIgnoreCase("WebstaurantStore Cart")
     }
     static content = {
-        searchResults {$('[data-testid="itemDescription"]')}
-        paginationButtons {$('[data-testid=paging] nav ul li')}
-        addToCartButtons {$('[data-testid="itemAddCart"]')}
+        emptyCartModule {module EmptyCartModal}
+        emptyCartButton { $(By.className("emptyCartButton"))}
+        cartItems {$(By.className("cartItem"),dynamic:true)}
+        cartEmptyBanner {$(By.className("cartEmpty"),dynamic:true)}
     }
 
-    boolean verifySearchResultDescrition(String searchTerm){
-        boolean resultsContainTable = true
-        while (verifyAtNotLastPage() && resultsContainTable){
-            searchResults.every {
-                resultsContainTable && it.text().containsIgnoreCase(searchTerm)
-            }
-            navigateToNextPage()
-        }
-        return resultsContainTable
+    void clickEmptyCartButton(){
+        emptyCartButton.click()
     }
 
-    void navigateLastPage(){
-        while(verifyAtNotLastPage()){
-            navigateToNextPage()
-        }
-    }
-    void selectLastSearchResultOnPage(){
-        searchResults.last().click()
+    boolean verifyCartIsNotEmpty(){
+        !cartItems.empty
     }
 
-    boolean verifyNotAtFirstPage(){
-        paginationButtons.first().text() == ""
-    }
-
-    boolean verifyAtNotLastPage(){
-        paginationButtons.last().text() == ""
-    }
-
-    void navigateToNextPage(){
-        paginationButtons.last().click()
-    }
-
-    void navigateToPreviousPage(){
-        paginationButtons.first().click()
-    }
-
-    void addLastItemOnPageToCart(){
-        addToCartButtons.last().click()
-    }
-
-    void clickCartButton(){
-        cartButton.click()
+    boolean verifyCartIsEmpty(){
+        cartEmptyBanner.isDisplayed()
     }
 }
