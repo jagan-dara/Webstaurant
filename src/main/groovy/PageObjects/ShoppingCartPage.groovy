@@ -10,8 +10,8 @@ class ShoppingCartPage extends BasePage{
     static content = {
         emptyCartModule {module EmptyCartModal}
         emptyCartButton { $(By.className("emptyCartButton"))}
-        cartItems {$(By.className("cartItem"),dynamic:true)}
-        cartEmptyBanner {$(By.className("cartEmpty"),dynamic:true)}
+        cartItems(wait:"quick", required: false) {$(By.className("cartItem"),dynamic:true)}
+        cartEmptyBanner(wait:"quick", required:false) {$(By.className("cartEmpty"),dynamic:true)}
     }
 
     void clickEmptyCartButton(){
