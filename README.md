@@ -9,5 +9,5 @@ Windows
 2. install Gradle. Here is a link for convenience https://docs.gradle.org/current/userguide/installation.html#ex-installing-manually
 3. Download the repo to you C drive
 4. Cd to the base directory
-5. run .\gradlew build 
-6. run .\gradlew test for future runs
+5. run .\gradlew clean
+6. run .\gradlew build  -  you will see the test running.
