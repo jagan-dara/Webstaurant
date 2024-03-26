@@ -11,3 +11,4 @@ Windows
 4. Cd to the base directory
 5. run .\gradlew clean
 6. run .\gradlew build  -  you will see the test running.
+7. A youtube video of the running project can be found here https://youtu.be/e2jjQkqX7YI
